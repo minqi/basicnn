@@ -38,8 +38,7 @@ class MLP():
 			self.A[i + 1] = a
 		return a
 
-	def backprop(self, x, y):
-		y_hat = self.predict(x)
+	def backprop(self, y, y_hat):
 		dW = np.array([np.zeros(w.shape) for w in self.W])
 		db = np.array([np.zeros(b.shape) for b in self.b])
 		da = self.da(y, y_hat)
@@ -74,7 +73,7 @@ class MLP():
 		dW_batch = [np.zeros(w.shape) for w in self.W]
 		db_batch = [np.zeros(b.shape) for b in self.b]
 		for x, y in batch:
-			dW, db = self.backprop(x, y)
+			dW, db = self.backprop(y, self.predict(x))
 			dW_batch = [cumsum + addend for cumsum, addend in zip(dW_batch, dW)]
 			db_batch = [cumsum + addend for cumsum, addend in zip(db_batch, db)]
 		return np.array(dW_batch), np.array(db_batch)

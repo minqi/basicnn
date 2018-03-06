@@ -5,7 +5,7 @@ from models.mlp import MLP
 mlp_args = {
 	'lr': 0.2,
 	'batchSize': 1,
-	'numEpochs': 300,
+	'numEpochs': 5000,
 }
 
 if __name__ == '__main__':
