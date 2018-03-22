@@ -5,4 +5,4 @@ def sigmoid(z):
 
 def sigmoid_derivative(z):
 	a = sigmoid(z)
-	return (1 - a) * a
+		return (1 - a) * a
