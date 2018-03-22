@@ -21,6 +21,11 @@ class Dense(Layer):
 		db = dx 
 		dx = self.W.T.dot(dz)
 
+		self.W += dW
+		self.b += db
+		
+		return dx
+
 	def set_input(self, layer):
 		input_size = np.product(layer.get_output_shape())
 		self.W = np.zeros((size, input_size))
