@@ -5,6 +5,7 @@ from util.activations import sigmoid, sigmoid_derivative
 class Dense(Layer):
 
 	def __init__(self, size):
+		Layer.__init__(self, size)
 		self.W = None
 		self.b = np.zeros(size)
 		self.a = None
@@ -15,15 +16,15 @@ class Dense(Layer):
 		self.a = sigmoid(W.dot(x) + b)
 		return self.a
 
-	def backward(self, gradients):
-		dz = gradients * sigmoid_derivative(a)
+	def backward(self, activations, gradients, update):
+		dz = gradients * sigmoid_derivative(activations)
 		dW = dz.dot(self.x.T)
 		db = dx 
 		dx = self.W.T.dot(dz)
 
-		self.W += dW
-		self.b += db
-		
+		update(self.W, dW)
+		update(self.b, db)
+	
 		return dx
 
 	def set_input(self, layer):

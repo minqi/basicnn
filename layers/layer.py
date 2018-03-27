@@ -1,7 +1,10 @@
 class Layer():
 
-	def __init__(self):
-		pass
+	def __init__(self, size):
+		self.size = size
+
+	def get_size():
+		return self.size
 
 	def forward(self, x):
 		pass
@@ -14,3 +17,4 @@ class Layer():
 
 	def get_output_dim():
 		pass
+
