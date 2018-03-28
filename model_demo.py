@@ -13,7 +13,6 @@ if __name__ == '__main__':
 	train_y = np.reshape(data_y, (len(data_y), 1, 1))
 
 	model = Model()
-	model.add()
 	model.add(Input(1))
 	model.add(Dense(3))
 	model.add(Dense(1))

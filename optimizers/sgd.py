@@ -1,15 +1,16 @@
 import numpy as np
+from optimizer import Optimizer
 from util.batch import create_batch_generator
 
 class SGD(Optimizer):
 
-	def __init__(self, model, cost, num_epochs, batch_size, lr):
+	def __init__(self, model, cost, num_epochs = 10, batch_size = 32, lr = 0.15):
 		Optimizer.__init__(self, model, cost, num_epochs)
 		self.batch_size = batch_size
 		self.lr = lr
 
-	def update(parameter, gradient):
-		return parameter + (self.lr/batch_size) * gradient
+	def update(self, parameter, gradient):
+		return parameter + (self.lr/self.batch_size) * gradient
 
 	def optimize(self, x, y):
 		batch_generator = create_batch_generator(x, y, self.batch_size)

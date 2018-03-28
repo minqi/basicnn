@@ -1,5 +1,5 @@
 import numpy as np
-from layers import Layer
+from layers.layer import Layer
 
 class Input(Layer):
 
@@ -13,4 +13,4 @@ class Input(Layer):
 		return gradients
 
 	def get_output_shape(self):
-		return shape
+		return self.shape

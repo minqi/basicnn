@@ -1,5 +1,5 @@
 import numpy as np
-from optimizers import SGD
+from optimizers.sgd import SGD
 
 class Model():
 	def __init__(self):
@@ -16,12 +16,12 @@ class Model():
 
 	def compile(self, cost, optimizer = 'sgd'):
 		if optimizer == 'sgd':
-			self.optimizer = SGD(self, cost)
+			self.optimizer = SGD(self, cost=cost, num_epochs=10, batch_size=4, lr=0.15)
 
 	def predict(self, x):
 		for layer in self.layers:
 			x = layer.forward(x)
 		return x
 
-	def train(train_x, train_y):
+	def train(self, train_x, train_y):
 		self.optimizer.optimize(train_x, train_y)

@@ -1,5 +1,5 @@
 import numpy as np
-from layers import Layer
+from layers.layer import Layer
 from util.activations import sigmoid, sigmoid_derivative
 
 class Dense(Layer):
@@ -13,15 +13,15 @@ class Dense(Layer):
 
 	def forward(self, x):
 		self.x = x
-		self.a = sigmoid(W.dot(x) + b)
+		self.a = sigmoid(self.W.dot(x) + self.b)
 		return self.a
 
 	def backward(self, activations, gradients, update):
 		dz = gradients * sigmoid_derivative(activations)
 		dW = dz.dot(self.x.T)
-		db = dx 
 		dx = self.W.T.dot(dz)
-
+		db = dx 
+		
 		update(self.W, dW)
 		update(self.b, db)
 	
@@ -29,7 +29,7 @@ class Dense(Layer):
 
 	def set_input(self, layer):
 		input_size = np.product(layer.get_output_shape())
-		self.W = np.zeros((size, input_size))
+		self.W = np.zeros((self.size, input_size))
 
 	def get_output_shape(self):
-		return (size,)
+		return (self.size,)
