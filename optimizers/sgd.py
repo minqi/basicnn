@@ -22,10 +22,10 @@ class SGD(Optimizer):
 			while (batch_index * self.batch_size < n):
 				batch = batch_generator.next()
 				for x, y in batch:
-					backprop_values = self.model.predict(x)
+					activations = self.model.predict(x)
 					gradients = np.ones(self.model.layers[-1].get_size())
 					for layer in self.model.layers[:0:-1]:
-						layer.backward(activations, gradients, self.update)
+						activations, gradients = layer.backward(activations, gradients, self.update)
 
 				batch_index += 1
 

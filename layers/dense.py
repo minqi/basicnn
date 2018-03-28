@@ -25,7 +25,7 @@ class Dense(Layer):
 		update(self.W, dW)
 		update(self.b, db)
 	
-		return dx
+		return (self.x, dx)
 
 	def set_input(self, layer):
 		input_size = np.product(layer.get_output_shape())

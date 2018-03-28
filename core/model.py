@@ -23,5 +23,5 @@ class Model():
 			x = layer.forward(x)
 		return x
 
-	def train(data):
-		self.optimizer.train(data)
+	def train(train_x, train_y):
+		self.optimizer.optimize(train_x, train_y)
