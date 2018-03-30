@@ -1,3 +1,5 @@
+import numpy as np
+
 def create_batch_generator(data_x, data_y, batch_size):
 	pairs = zip(data_x, data_y)
 	assert(batch_size <= len(pairs))

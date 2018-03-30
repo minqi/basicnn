@@ -6,6 +6,12 @@ class Model():
 		self.layers = []
 		self.optimizer = None
 
+	def get_layers(self):
+		return self.layers
+
+	def get_output_shape(self):
+		return self.layers[-1].get_output_shape()
+
 	def add(self, layer):
 		self.layers.append(layer)
 
@@ -14,9 +20,9 @@ class Model():
 			prev_layer = self.layers[num_layers - 2]
 			layer.set_input(prev_layer)
 
-	def compile(self, cost, optimizer = 'sgd'):
+	def compile(self, cost, optimizer = 'sgd', num_epochs=10, batch_size=4, lr=0.15):
 		if optimizer == 'sgd':
-			self.optimizer = SGD(self, cost=cost, num_epochs=10, batch_size=4, lr=0.15)
+			self.optimizer = SGD(self, cost=cost, num_epochs=num_epochs, batch_size=batch_size, lr=lr)
 
 	def predict(self, x):
 		for layer in self.layers:

@@ -4,17 +4,18 @@ from util.batch import create_batch_generator
 
 class SGD(Optimizer):
 
-	def __init__(self, model, cost, num_epochs = 10, batch_size = 32, lr = 0.15):
+	def __init__(self, model, cost, num_epochs = 10, batch_size = 2, lr = 0.15):
 		Optimizer.__init__(self, model, cost, num_epochs)
 		self.batch_size = batch_size
 		self.lr = lr
 
 	def update(self, parameter, gradient):
-		return parameter + (self.lr/self.batch_size) * gradient
+		return parameter - (self.lr/self.batch_size) * gradient
 
 	def optimize(self, x, y):
 		batch_generator = create_batch_generator(x, y, self.batch_size)
 
+		output_shape = self.model.get_output_shape()
 		losses = []
 		n = len(x)
 		for i in xrange(self.num_epochs):
@@ -22,11 +23,13 @@ class SGD(Optimizer):
 			batch_index = 0
 			while (batch_index * self.batch_size < n):
 				batch = batch_generator.next()
-				for x, y in batch:
-					activations = self.model.predict(x)
-					gradients = np.ones(self.model.layers[-1].get_size())
-					for layer in self.model.layers[:0:-1]:
-						activations, gradients = layer.backward(activations, gradients, self.update)
+				gradients = np.zeros(output_shape)
+				for bx, by in batch:
+					activations = self.model.predict(bx)
+					gradients += self.cost.derivative(by, activations)
+
+				for layer in self.model.layers[::-1]:
+					activations, gradients = layer.backward(gradients, self.update)
 
 				batch_index += 1
 
